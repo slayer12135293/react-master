@@ -7,11 +7,14 @@ import FuelSavingsForm from '../FuelSavingsForm'
 
 export class FuelSavingsPage extends React.Component {
   saveFuelSavings = () => {
-      this.props.actions.saveFuelSavings(this.props.fuelSavings)
+      const { saveFuelSavings, fuelSavings } = this.props
+      saveFuelSavings(fuelSavings)
+
   }
 
   calculateFuelSavings = e => {
-      this.props.actions.calculateFuelSavings(this.props.fuelSavings, e.target.name, e.target.value)
+      const { calculateFuelSavings, fuelSavings  } = this.props
+      calculateFuelSavings(fuelSavings, e.target.name, e.target.value)
   }
 
   render() {
@@ -26,20 +29,17 @@ export class FuelSavingsPage extends React.Component {
 }
 
 FuelSavingsPage.propTypes = {
-    actions: PropTypes.object.isRequired,
     fuelSavings: PropTypes.object.isRequired,
 }
 
-function mapStateToProps(state) {
-    return {
-        fuelSavings: state.fuelSavings,
-    }
-}
+const mapStateToProps = state => ({
+    fuelSavings: state.fuelSavings,  
+})
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(actions, dispatch),
-    }
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
+        actions, 
+        dispatch)
 }
 
 export default connect(

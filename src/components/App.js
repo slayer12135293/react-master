@@ -4,6 +4,7 @@ import { NavLink, Route, Switch } from 'react-router-dom'
 import AboutPage from './AboutPage'
 import FuelSavingsPage from './containers/FuelSavingsPage'
 import HomePage from './HomePage'
+import SpotifyPage from './pages/spotifyPage/SpotifyPage'
 import NotFoundPage from './NotFoundPage'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -15,18 +16,16 @@ import { hot } from 'react-hot-loader'
 
 class App extends React.Component {
     render() {
-        const activeStyle = { color: 'blue' }
+        const activeStyle = { fontWeight:'bold' }
         return (
-            <div>
-                <div>
-                    <NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink>
-                    {' | '}
-                    <NavLink to="/fuel-savings" activeStyle={activeStyle}>Demo App</NavLink>
-                    {' | '}
-                    <NavLink to="/about" activeStyle={activeStyle}>About</NavLink>
+            <div className="container-fluid">
+                <div className="nav nav-pills nav-fill">
+                    <NavLink exact to="/" activeStyle={activeStyle} className="nav-item nav-link" >Spotify</NavLink>                    
+                    <NavLink to="/fuel-savings" activeStyle={activeStyle}  className="nav-item nav-link">Demo App</NavLink>                    
+                    <NavLink to="/about" activeStyle={activeStyle}  className="nav-item nav-link">About</NavLink>
                 </div>
                 <Switch>
-                    <Route exact path="/" component={HomePage} />
+                    <Route exact path="/" component={SpotifyPage} />
                     <Route path="/fuel-savings" component={FuelSavingsPage} />
                     <Route path="/about" component={AboutPage} />
                     <Route component={NotFoundPage} />

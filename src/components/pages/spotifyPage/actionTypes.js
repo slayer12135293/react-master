@@ -1,0 +1,2 @@
+export const SPOTIFY_SAVE_TOKEN = 'SPOTIFY_SAVE_TOKEN'
+
