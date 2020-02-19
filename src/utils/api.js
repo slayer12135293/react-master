@@ -1,5 +1,5 @@
 
-import configureStore from '../store/configureStore'
+import store  from '../store/configureStore'
 
 const LoginToSpotify = async () => {
 
@@ -40,9 +40,8 @@ const Api = {
         getPropertyPreivewByEstateKey: estateKey => `/estate/EstatePreview?id=${estateKey}`,
         estateSearch: `/search/EstateSearch`,
         cameraSearch: `/search/CameraSearch`,
-        estateBorders: estateKey => `/map/EstateBorders/${estateKey}`,
-        spotifyAuth: 'https://accounts.spotify.com/authorize?client_id=a6e82c769ba14f1eb0a57eeaed979974&response_type=token&redirect_uri=http://localhost:3000/&state=123',
-
+        estateBorders: estateKey => `/map/EstateBorders/${estateKey}`,  
+        getUserProfile: 'https://api.spotify.com/v1/me',     
     },
     async get(path) {
         return apiRequest(path, 'GET', null)
@@ -69,7 +68,7 @@ const apiRequest = async (path, method = 'GET', payload) => {
     //const url = `${configureStore.getState().app.apiBaseURL}${path.replace('//', '/')}`
     const url = `${path.replace('//', '/')}`
 
-    //const { jwtToken } = configureStore.getState().user
+    const { tokenBearer } = store.getState().spotify
     // const refreshToken = user.refreshToken
 
     // // Check if token needs to be updated or use as is.
@@ -81,7 +80,7 @@ const apiRequest = async (path, method = 'GET', payload) => {
         headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            //Authorization: `Bearer ${jwtToken}`,
+            Authorization: `Bearer ${tokenBearer}`,
         },
         
     }

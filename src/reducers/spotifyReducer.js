@@ -1,6 +1,7 @@
-import { SPOTIFY_SAVE_TOKEN } from '../components/pages/spotifyPage/actionTypes'
+import { SPOTIFY_SAVE_TOKEN, SPOTIFY_SAVE_USERINFO } from '../components/pages/spotifyPage/actionTypes'
 const initialState = {
     tokenBearer: '',
+    userInfo: null,
 }
 const spotifyReducer = (state = initialState, { type, payload }) => {
     switch (type) {
@@ -8,7 +9,12 @@ const spotifyReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 tokenBearer: payload.token,
-            }        
+            }  
+        case SPOTIFY_SAVE_USERINFO:
+            return {
+                ...state,
+                userInfo: payload,                
+            }      
 
         default:
             return state
