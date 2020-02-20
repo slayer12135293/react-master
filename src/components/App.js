@@ -5,6 +5,7 @@ import AboutPage from './AboutPage'
 import FuelSavingsPage from './containers/FuelSavingsPage'
 import HomePage from './HomePage'
 import SpotifyPage from './pages/spotifyPage/SpotifyPage'
+import SpotifyHooksPage  from './pages/spotifyHooksPage/SpotifyHooksPage'
 import NotFoundPage from './NotFoundPage'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -20,12 +21,14 @@ class App extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="nav nav-pills nav-fill">
-                    <NavLink exact to="/" activeStyle={activeStyle} className="nav-item nav-link" >Spotify</NavLink>                    
+                    <NavLink exact to="/" activeStyle={activeStyle} className="nav-item nav-link" >Spotify Hooks</NavLink>                    
+                    <NavLink exact to="/spotify" activeStyle={activeStyle} className="nav-item nav-link" >Spotify Class</NavLink>                    
                     <NavLink to="/fuel-savings" activeStyle={activeStyle}  className="nav-item nav-link">Demo App</NavLink>                    
                     <NavLink to="/about" activeStyle={activeStyle}  className="nav-item nav-link">About</NavLink>
                 </div>
                 <Switch>
-                    <Route exact path="/" component={SpotifyPage} />
+                    <Route exact path="/" component={SpotifyHooksPage} />
+                    <Route path="/spotify" component={SpotifyPage} />
                     <Route path="/fuel-savings" component={FuelSavingsPage} />
                     <Route path="/about" component={AboutPage} />
                     <Route component={NotFoundPage} />

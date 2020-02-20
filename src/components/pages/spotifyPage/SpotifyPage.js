@@ -10,8 +10,8 @@ class SpotifyPage extends React.Component {
     }
 
     async componentDidMount() {
-        const { saveSpotifyToken, saveSpotifyUserInfo } = this.props
-        if(location.hash === ''){
+        const { saveSpotifyToken, saveSpotifyUserInfo, token } = this.props
+        if(token === '' && location.hash === ''){
             this.setState({
                 showLogin: true,
             })

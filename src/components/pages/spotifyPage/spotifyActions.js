@@ -1,15 +1,13 @@
 import * as types from './actionTypes'
 import { Api } from '../../../utils/api'
 
-const saveSpotifyToken = (token) => {    
-    return ( dispatch ) => {
-        dispatch({
-            type: types.SPOTIFY_SAVE_TOKEN,
-            payload: {
-                token,
-            },
-        })
-    }
+const saveSpotifyToken = (token) => dispatch => {       
+    dispatch({
+        type: types.SPOTIFY_SAVE_TOKEN,
+        payload: {
+            token,
+        },
+    })
 
 }
 
@@ -26,4 +24,11 @@ const saveSpotifyUserInfo = () => async (dispatch) => {
     }    
 }
 
-export { saveSpotifyToken, saveSpotifyUserInfo }
+const logOutSpotify = () => dispatch => {
+    dispatch({
+        type: types.SPOTIFY_SAVE_USERINFO,
+        payload: null,
+    })
+}
+
+export { saveSpotifyToken, saveSpotifyUserInfo, logOutSpotify }

@@ -7,8 +7,17 @@ import { createBrowserHistory } from 'history'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import createRootReducer from '../reducers'
 
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+
 export const history = createBrowserHistory()
 const connectRouterHistory = connectRouter(history)
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    blacklist: [ 'navigation', 'router' ],
+}
 
 function configureStoreProd(initialState) {
     const reactRouterMiddleware = routerMiddleware(history)
@@ -22,7 +31,8 @@ function configureStoreProd(initialState) {
     ]
 
     return createStore(
-        createRootReducer(history), // root reducer with router state
+        //createRootReducer(history), // root reducer with router state
+        persistReducer(persistConfig, createRootReducer(history)),
         initialState,
         compose(applyMiddleware(...middlewares))
     )
@@ -46,7 +56,8 @@ function configureStoreDev(initialState) {
 
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // add support for Redux dev tools
     const store = createStore(
-        createRootReducer(history), // root reducer with router state
+        //createRootReducer(history), // root reducer with router state
+        persistReducer(persistConfig, createRootReducer(history)),
         initialState,
         composeEnhancers(applyMiddleware(...middlewares))
     )
@@ -63,6 +74,8 @@ function configureStoreDev(initialState) {
 }
 
 const configureStore = process.env.NODE_ENV === 'production' ? configureStoreProd : configureStoreDev 
+
 const store = configureStore()
+export const persistor = persistStore(store)
 
 export default store

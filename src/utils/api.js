@@ -1,5 +1,5 @@
 
-import store  from '../store/configureStore'
+import store from '../store/configureStore'
 
 const LoginToSpotify = async () => {
 
