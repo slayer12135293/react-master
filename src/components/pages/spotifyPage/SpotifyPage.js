@@ -2,7 +2,6 @@ import React from 'react'
 import * as actions from './spotifyActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Api } from '../../../utils/api'
 
 class SpotifyPage extends React.Component {
     state = {

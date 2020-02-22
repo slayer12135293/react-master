@@ -3,7 +3,6 @@ import { NavLink, Route, Switch } from 'react-router-dom'
 
 import AboutPage from './AboutPage'
 import FuelSavingsPage from './containers/FuelSavingsPage'
-import HomePage from './HomePage'
 import SpotifyPage from './pages/spotifyPage/SpotifyPage'
 import SpotifyHooksPage  from './pages/spotifyHooksPage/SpotifyHooksPage'
 import NotFoundPage from './NotFoundPage'

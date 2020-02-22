@@ -34,14 +34,10 @@ const LoginToSpotify = async () => {
 
 // Lei added
 const Api = {
-    ENDPOINTS: {
-        getPropertyDetails: estateKey => `/estate/GetEstateDetails?estateKey=${estateKey}`,
-        getPropertyPreivew: (latitude, longitude) => `/map/EstateByCoordinate?latitude=${latitude}&longitude=${longitude}`,
-        getPropertyPreivewByEstateKey: estateKey => `/estate/EstatePreview?id=${estateKey}`,
-        estateSearch: `/search/EstateSearch`,
-        cameraSearch: `/search/CameraSearch`,
-        estateBorders: estateKey => `/map/EstateBorders/${estateKey}`,  
+    ENDPOINTS: {      
         getUserProfile: 'https://api.spotify.com/v1/me',     
+        searchArtist: query => `https://api.spotify.com/v1/search?q=${query}&type=artist`,
+        searchTrack: query => `https://api.spotify.com/v1/search?q=${query}&type=track`,
     },
     async get(path) {
         return apiRequest(path, 'GET', null)
