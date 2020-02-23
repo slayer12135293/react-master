@@ -3,6 +3,8 @@ import * as actions from './spotifyActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { Api } from '../../../utils/api'
 import './styles.scss'
+import  ArtistResultItem  from '../staticComponents/ArtistResultItem'
+import TrackResultItem from '../staticComponents/TrackResultItem'
 
 const SpotifyHooksPage = () => {   
     const dispatch = useDispatch()
@@ -10,20 +12,33 @@ const SpotifyHooksPage = () => {
     const [ searchQuery, setSearchQuery ] = useState('') 
     const [ artistResult, setArtistResult ] = useState(null)
     const [ trackResult, setTrackResult ] = useState(null)
-    useEffect(() => {
+    useEffect(() => {     
         if( location.hash !== ''){           
             dispatch(actions.saveSpotifyToken(location.hash.split('&')[0].split('=')[1]))
             dispatch(actions.saveSpotifyUserInfo())            
         }
+
     },[])
     
+    useEffect(() => {
+        const listener = event => {
+            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                searchArtist()
+            }
+        }
+        document.addEventListener('keydown', listener)
+        return () => {
+            document.removeEventListener('keydown', listener)
+        }
+    })
+
     const searchArtist = async () => {
         const artistsResponse = await Api.get(Api.ENDPOINTS.searchArtist(searchQuery))
         const trackResponse = await Api.get(Api.ENDPOINTS.searchTrack(searchQuery))
         
         setArtistResult(artistsResponse.artists.items)
         setTrackResult(trackResponse.tracks.items)
-        console.log(trackResponse.tracks.items)
+        console.log(artistsResponse.artists.items)
     }
 
     return (        
@@ -61,23 +76,9 @@ const SpotifyHooksPage = () => {
                                 <div className="bolder shadow-sm p-3 mb-5 bg-white rounded">
                                     {artistResult.map( (item, index) => { 
                                         return(
-                                            <div key={index} className="border-bottom pb-3">
-                                                <div className="row">
-                                                    <h3>{item.name}</h3>                                                    
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        {item.images.length > 0 ? 
-                                                            <img  src={item.images[0].url}  className="rounded img-fluid"/> :
-                                                            <img  src="https://lh3.googleusercontent.com/proxy/i8Z2ZFFAq-62OLe0nVJubrly17gJEwuXPKgrvU3HatZ67uA4tkQvM75bLUFU6OwYk8AX-x65VPszPUS42DDMqbPuzcSHqQehTF3jGCDxaNYiTAvDv9rRIsng3zMqHq5R"  className="rounded img-fluid"/>  }                                                    
-                                                    </div>
-                                                    <div className=" col-md-6 vlign-middle" >
-                                                        <div>{item.genres.map( (gen, index) => { return (<span key={index} className="badge badge-pill badge-info">{gen}</span>  )})}</div> 
-                                                        <h5>Total followers: {item.followers.total}</h5>
-                                                        <h5>Popularity: {item.popularity}</h5>
-                                                    </div>                                                                                 
-                                                </div>                                                
-                                            </div>
+                                            <ArtistResultItem 
+                                                key={index} 
+                                                artistItem={ { item }  } />                                            
                                         )                                        
                                     })}
                                 </div>
@@ -89,23 +90,11 @@ const SpotifyHooksPage = () => {
                                 <div className="bolder shadow-sm p-3 mb-5 bg-white rounded">
                                     {trackResult.map( (track, index) => {
                                         return(
-                                            <div key={index} className="border-bottom pb-3">
-                                                <div className="row">
-                                                    <h3>{track.name}</h3>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-2">
-                                                        {track.album && track.album.images && 
-                                                        <img width="80" src={track.album.images[1].url} className="rounded" /> }
-                                                        
-                                                    </div>
-                                                    <div className="col-md-10">
-                                                        <span>Album name: {track.album.name}</span> <br/>
-                                                        <span>Artist name: {track.album.artists[0].name}</span>
-                                                    </div>
-                                                    
-                                                </div> 
-                                            </div>
+                                            <TrackResultItem 
+                                                key={index} 
+                                                title={track.name} 
+                                                titleUrl={track.external_urls.spotify} 
+                                                album={track.album}/>
                                         )
                                     } )}
                                 </div>                            
