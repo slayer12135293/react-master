@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import fuelSavings from './fuelSavingsReducer'
 import spotify from './spotifyReducer'
+import login from './loginReducer'
 import { connectRouter } from 'connected-react-router'
 
 const rootReducer = history => combineReducers({
     router: connectRouter(history),
-    fuelSavings,
     spotify,
+    login,
 })
 
 export default rootReducer

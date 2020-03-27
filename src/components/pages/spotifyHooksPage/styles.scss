@@ -2,3 +2,23 @@
     margin-top:auto;
     margin-bottom:auto
 }
+.profile-icon {
+    width: 50px;
+    height: 50px;
+}
+.nav-container{
+    width:100%;
+
+}
+.profile-container{
+    color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+    .label{
+        font-weight: bold;
+        margin:0
+    }
+    .sub-label{
+        font-size: 12px;
+    }
+}

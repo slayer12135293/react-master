@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import * as actions from './spotifyActions'
+import * as loginActions from '../loginPage/loginActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { Api } from '../../../utils/api'
 import './styles.scss'
 import  ArtistResultItem  from '../staticComponents/ArtistResultItem'
 import TrackResultItem from '../staticComponents/TrackResultItem'
 
+import { GoogleLogout } from 'react-google-login'
+
 const SpotifyHooksPage = () => {   
     const dispatch = useDispatch()
     const userInfo = useSelector(state => state.spotify.userInfo)
+    const googleUser = useSelector(state => state.login.user )
+   
     const [ searchQuery, setSearchQuery ] = useState('') 
     const [ artistResult, setArtistResult ] = useState(null)
     const [ trackResult, setTrackResult ] = useState(null)
-    useEffect(() => {     
+    useEffect(() => {   
+
         if( location.hash !== ''){           
             dispatch(actions.saveSpotifyToken(location.hash.split('&')[0].split('=')[1]))
             dispatch(actions.saveSpotifyUserInfo())            
@@ -41,13 +47,42 @@ const SpotifyHooksPage = () => {
         console.log(artistsResponse.artists.items)
     }
 
+    const sucessLogout = () => {
+        console.log('logout')
+        dispatch(loginActions.logout())
+    }
+
     return (        
         <div>           
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div className="nav-container">
+                    <div className="float-left">
+                        <img src={googleUser.imageUrl} className="rounded-circle profile-icon" />  
+                    </div>    
+                    <div className="float-left profile-container">
+                        <div className="label">
+                            {googleUser.name}
+                        </div>
+                        <div className="sub-label">
+                            {googleUser.email}
+                        </div>
+                    </div>
+                    <div className="float-right">
+                        <GoogleLogout
+                            clientId="370800998793-9d00usao27vrmh8p1qu29q3ama2c7rbh.apps.googleusercontent.com"
+                            buttonText="Logout"
+                            onLogoutSuccess={sucessLogout}                                >
+                        </GoogleLogout>
+                    </div>
+                </div>  
+                
+            </nav>
             <h1> Spotify Demo </h1>
             {
                 userInfo === null && 
+                
                 <a className="button" href="https://accounts.spotify.com/authorize?client_id=a6e82c769ba14f1eb0a57eeaed979974&response_type=token&redirect_uri=http://localhost:3000">
-            login
+                    login to spotify
                 </a>
             }
             {
