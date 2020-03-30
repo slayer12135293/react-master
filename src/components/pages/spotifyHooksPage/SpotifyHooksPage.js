@@ -8,6 +8,7 @@ import  ArtistResultItem  from '../staticComponents/ArtistResultItem'
 import TrackResultItem from '../staticComponents/TrackResultItem'
 
 import { GoogleLogout } from 'react-google-login'
+import appConfig from '../../../config/appConfig'
 
 const SpotifyHooksPage = () => {   
     const dispatch = useDispatch()
@@ -69,7 +70,7 @@ const SpotifyHooksPage = () => {
                     </div>
                     <div className="float-right">
                         <GoogleLogout
-                            clientId="370800998793-9d00usao27vrmh8p1qu29q3ama2c7rbh.apps.googleusercontent.com"
+                            clientId={appConfig.google.clientId}
                             buttonText="Logout"
                             onLogoutSuccess={sucessLogout}                                >
                         </GoogleLogout>

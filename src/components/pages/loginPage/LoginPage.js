@@ -3,6 +3,7 @@ import * as actions from './loginActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { GoogleLogin } from 'react-google-login'
 import {  useHistory,useLocation } from 'react-router-dom'
+import appConfig from '../../../config/appConfig'
 
 import './styles.scss'
 
@@ -42,7 +43,7 @@ const LoginPage = () => {
                 <div className="row d-flex justify-content-center m-4">
 
                     <GoogleLogin
-                        clientId="370800998793-9d00usao27vrmh8p1qu29q3ama2c7rbh.apps.googleusercontent.com"
+                        clientId={appConfig.google.clientId}
                         render={renderProps => (
                             <button className="btn btn-primary btn-block" 
                                 onClick={renderProps.onClick} 

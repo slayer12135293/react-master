@@ -1,7 +1,7 @@
 {
   "name": "leitest1",
   "version": "0.1.0",
-  "description": "react master",
+  "description": "Timerie",
   "engines": {
     "node": ">=8",
     "npm": ">=3"
